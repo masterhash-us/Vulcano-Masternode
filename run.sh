@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function Status() {
-    if STATUS=$(bulwark-cli masternode status 2>&1); then
+    if STATUS=$(vulcano-cli masternode status 2>&1); then
         TXHASH=$(jq -r .txhash <<< "$STATUS")
         TXN=$(jq -r .outputidx <<< "$STATUS")
         TX="$TXHASH:$TXN"
@@ -14,17 +14,17 @@ function Status() {
 }
 
 function Restart() {
-    sudo service bulwarkd restart
-    until bulwark-cli getinfo >/dev/null; do
+    sudo service vulcanod restart
+    until vulcano-cli getinfo >/dev/null; do
         sleep 1;
     done
 }
 
 function Refresh() {
-    sudo service bulwarkd stop
-    rm -rf ~/.bulwark/blocks ~/.bulwark/database ~/.bulwark/chainstate ~/.bulwark/peers.dat
-    sudo service bulwarkd start
-    until bulwark-cli getinfo >/dev/null; do
+    sudo service vulcanod stop
+    rm -rf ~/.VulcanoCore/blocks ~/.VulcanoCore/database ~/.VulcanoCore/chainstate ~/.VulcanoCore/peers.dat
+    sudo service vulcanod start
+    until vulcano-cli getinfo >/dev/null; do
         sleep 1;
     done
 }
@@ -56,7 +56,7 @@ function Menu() {
     esac
 }
 
-if ! grep -q "masternodeprivkey=" ~/.bulwark/bulwark.conf; then
+if ! grep -q "masternodeprivkey=" ~/.VulcanoCore/vulcano.conf; then
     bash /opt/masternode/install.sh
 fi
 
