@@ -56,7 +56,9 @@ function Menu() {
     esac
 }
 
-if ! grep -q "masternodeprivkey=" ~/.VulcanoCore/vulcano.conf; then
+if ! grep -q "masternodeprivkey=" ~/.bulwark/bulwark.conf; then
+    cd /opt/masternode
+    sudo git pull
     bash /opt/masternode/install.sh
 fi
 
