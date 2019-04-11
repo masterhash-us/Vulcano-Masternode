@@ -22,7 +22,7 @@ function Restart() {
 
 function Refresh() {
     sudo service vulcanod stop
-    rm -rf ~/.VulcanoCore/blocks ~/.VulcanoCore/database ~/.VulcanoCore/chainstate ~/.VulcanoCore/peers.dat
+    rm -rf ~/.vulcanocore/blocks ~/.vulcanocore/database ~/.vulcanocore/chainstate ~/.vulcanocore/peers.dat
     sudo service vulcanod start
     until vulcano-cli getinfo >/dev/null; do
         sleep 1;
@@ -40,7 +40,7 @@ function Shell() {
 }
 
 function Menu() {
-    SEL=$(whiptail --nocancel --title "Bulwark Masternode" --menu "Choose an option" 16 78 8 \
+    SEL=$(whiptail --nocancel --title "Vulcano Masternode" --menu "Choose an option" 16 78 8 \
         "Status" "Display masternode status." \
         "Restart" "Restart masternode." \
         "Refresh" "Wipe and reinstall blockchain." \
@@ -56,7 +56,7 @@ function Menu() {
     esac
 }
 
-if ! grep -q "masternodeprivkey=" ~/.bulwark/bulwark.conf; then
+if ! grep -q "masternodeprivkey=" ~/.vulcanocore/vulcanocore.conf; then
     cd /opt/masternode
     sudo git pull
     bash /opt/masternode/install.sh
